@@ -16,6 +16,7 @@ html
 		link(rel="stylesheet", href="revealjs/css/theme/default.css", id="theme")
 
 		link(rel="stylesheet", href="revealjs/lib/css/zenburn.css")
+		link(rel="stylesheet", href="main.css")
 
 		script
 			document.write( '<link rel="stylesheet" href="revealjs/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -80,6 +81,14 @@ html
 						li Socket data comes in (webserver or socket IO etc)
 						li Reading a file
 					p Not unlike Javascript in the browser
+
+					code 
+						|var http = require('http');<br />
+						|http.createServer(function (req, res) {<br />
+						|&ensp;res.writeHead(200, {'Content-Type': 'text/plain'});<br />
+						|&ensp;res.end('Hello World\n');<br />
+						|}).listen(1337, '127.0.0.1');<br />
+						|console.log('Server running at http://127.0.0.1:1337/');<br />
 				section
 					h2 Why is this good?
 					ul 
@@ -96,6 +105,7 @@ html
 						li Forking for occasional heavy computations
 				section
 					h2 But it is Javascript and it is weakly typed
+
 					p Use one of the altJS languages that compile to Javascript
 					ul
 						li Coffeescript - Write less code, so have less bugs
@@ -117,15 +127,43 @@ html
 				section 
 					h2 Frameworks
 					ul
-						li NodeJS has a HUGE ecosystem based on NPM
+						li NodeJS has a HUGE (40.000+ modules) ecosystem based on NPM
 						li package quality varies, so be careful
 
 				section
-					p Express	
-				section 
-					p Websockets
+					h2 Express
+					h3 Fast web framework based on Sinatra
+					ul 
+						li Fast developement
+						li Advanced routing
+						li Easy to work with
+						li Good templating
+
 				section
-					p Mongoose		
+					h2 Mongoose
+					h3 MongoDB noSQL ORM
+					ul 
+						li Schema based
+						li No baoiler plate code
+						li Plays together really well with Express
+
+				section 
+					h2 Websockets
+					h3 Socket.IO
+					ul 
+						li Easy to implement socket communications
+
+
+				section
+					h2 Async
+					h3 Just one of the tools to solve callback 'hell'
+					ul
+						li 20 functions to handle multiple async calls
+						li series, parallel, whilst, queue, etc..
+
+ 
+
+
 				section
 					h2 Testing testing testing
 					p Multiple good libraries for unit testing
@@ -133,6 +171,16 @@ html
 						li My favorite: Jasmine
 						li Jasmine-node: command line tool for NodeJS
 						li Easy to run in Jenkins
+				
+				section
+					h2 debugging
+
+					ul
+						li Use node-dev to restart your process when your code changes
+						li console.log is often a fast way to inspect objects
+						li use node-inspector to debug your application in the Chrome debugger
+
+
 				section
 					h2 Running in production
 					p Multiple PaaS providers
@@ -143,16 +191,20 @@ html
 						li App Fog
 						li Azure
 						li etc..
-
 					i http://strongloop.com/strongblog/a-comparison-of-node-js-paas-hosting-providers/
+				
+				section
+					h2 Performance
+					h3 It is fast. Not the fastest, but fast enough
 
 
 
 
 
 
-		script( src="reveal.js/lib/js/head.min.js")
-		script( src="reveal.js/js/reveal.min.js")
+
+		script( src="revealjs/lib/js/head.min.js")
+		script( src="revealjs/js/reveal.min.js")
 
 		script
 
@@ -169,11 +221,11 @@ html
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
-					{ src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					{ src: 'revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
