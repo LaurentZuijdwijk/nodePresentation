@@ -1,0 +1,6 @@
+[submodule "revealjs"]
+		path = demoApp/public/presentation/revealjs
+		url = git://github.com/hakimel/reveal.js.git
+[submodule "revealjs"]
+		path = nodePresentation/revealjs
+		url = git://github.com/hakimel/reveal.js.git
