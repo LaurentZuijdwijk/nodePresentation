@@ -2,7 +2,7 @@ html
 	head
 		meta(charset="utf-8")
 
-		title reveal.js - The HTML Presentation Framework</title>
+		title Nodejs presentation</title>
 
 		meta(name="description", content="A framework for easily creating beautiful presentations using HTML")
 		meta(name="author",content="Hakim El Hattab")
@@ -59,7 +59,32 @@ html
 						li V8. The Javascript engine by Google
 						li LibUV. A high performance evented I/O library which offers the same API on Windows and Unix
 				
-					a(href="http://ssl-static2.strongloop.com/wp-content/uploads/2013/07/SL_Infographic_v2_092013.png") <b>Infographic</b>
+					a(href="http://ssl-static2.strongloop.com/wp-content/uploads/2013/07/SL_Infographic_v2_092013.png", target="_blank") <img src="http://ssl-static2.strongloop.com/wp-content/uploads/2013/07/SL_Infographic_v2_092013.png">
+
+				section
+					h2 My experience
+					ul
+						li Started using NodeJS in 2011 When it was at v0.4
+						li Build a fairly big application with Express and MySQL
+						li Deployed on Amazon EC2
+						li <a href="http://learn.heartworks.me.uk" target="_blank">Heartworks link</a>
+						li Used it for buidling quick mocks for an AngularJS application for Audi
+						li Built a quick blog for my personal website
+						li Using it at the moment as a middleware proxy for TUI
+
+				section
+					h2 Who is using it?
+					ul
+						li Dow Jones
+						li Ebay
+						li LinkedIn
+						li The New York Times
+						li Microsoft
+						li Pearson
+						li Net-a-porter
+						li Mozilla
+						li Many more...
+
 
 				section 
 					h2 Versioning
@@ -74,21 +99,30 @@ html
 
 
 				section
-					p Node works with an event loop
-					p All IO works asynchronious and shouldn't block (but it can)
-					p Code gets executed when an IO events happen
+					h2 Node works with an event loop
+					p IO is asynchronious and won't block (but it can, if you want)
+					p Code gets executed when an IO event happens
 					ul 
-						li Socket data comes in (webserver or socket IO etc)
+						li Socket data comes in (webserver or Socket.IO etc)
 						li Reading a file
 					p Not unlike Javascript in the browser
 
-					code 
-						|var http = require('http');<br />
-						|http.createServer(function (req, res) {<br />
-						|&ensp;res.writeHead(200, {'Content-Type': 'text/plain'});<br />
-						|&ensp;res.end('Hello World\n');<br />
-						|}).listen(1337, '127.0.0.1');<br />
-						|console.log('Server running at http://127.0.0.1:1337/');<br />
+					pre 
+						code.javascript
+							|fs.readFile('/etc/passwd', function (err, data) {
+							|    if (err) throw err;
+							|    console.log(data);
+							|});
+
+					pre 
+						code.javascript
+							|var http = require('http');
+							|http.createServer(function (req, res) {
+							|    res.writeHead(200, {'Content-Type': 'text/plain'});
+							|    res.end('Hello World\n');
+							|}).listen(1337, '127.0.0.1');
+							| 
+							|console.log('Server running at http://127.0.0.1:1337/');
 				section
 					h2 Why is this good?
 					ul 
@@ -103,6 +137,7 @@ html
 						li LibUV uses multiple threads for IO
 						li The cluster module makes parallelization very easy. Multiple processes can automatically share sockets.
 						li Forking for occasional heavy computations
+						li Developers shouldn't have to deal with concurrency
 				section
 					h2 But it is Javascript and it is weakly typed
 
@@ -111,7 +146,7 @@ html
 						li Coffeescript - Write less code, so have less bugs
 						li Typescript - static typing
 						li Dart
-					p Dynamic typing is not a big issue in real life. Use a more functional programming approach instead of classic OOP
+					p Big front-end applications are done in Javascript. <br/>Why not on the server? 
 				section
 					h2 NPM
 					h3 Node package manager
@@ -137,15 +172,42 @@ html
 						li Fast developement
 						li Advanced routing
 						li Easy to work with
-						li Good templating
+						li Supports most templating engines
+						li Redis session support
+						li elegant architecture
 
+					pre 
+						code.javascript
+							|app.set('view engine', 'jade');
+							|app.use(express.logger('dev'));
+							|app.use(express.bodyParser());
+							|app.use(myCustomMiddleWare());
+							|app.all('/apples', myController.getAllApples)
+							|http.createServer(app).listen(app.get('port'), function(){
+							|   console.log('Express server listening on port ' + app.get('port'));
+							|});
 				section
 					h2 Mongoose
 					h3 MongoDB noSQL ORM
 					ul 
 						li Schema based
-						li No baoiler plate code
-						li Plays together really well with Express
+						li No boiler plate code
+						li Plays together well with Express
+						li Loads of plugins to make life even easier
+					pre 
+						code.javascript
+							|// define a schema
+							|var animalSchema = new Schema({ name: String, type: String });
+							|  
+							|var Animal = mongoose.model('Animal', animalSchema);
+							|var dog = new Animal({ type: 'dog' });
+							|
+							|// Query by type  
+							|Animal.findOne({ 'type': 'dog' }, 'name type', function (err, animal) {
+							|    if (err) return handleError(err);
+							|    console.log('found', animal);
+							|})
+
 
 				section 
 					h2 Websockets
@@ -160,9 +222,45 @@ html
 					ul
 						li 20 functions to handle multiple async calls
 						li series, parallel, whilst, queue, etc..
+						li convention over configuration 
+						ul 
+							li (err, result) method signature
 
- 
+					pre 
+						code.javascript
+							|async.map(['file1','file2','file3'], fs.stat, function(err, results){
+							|   // results is now an array of stats for each file
+							|});
+							| 
+							|async.filter(['file1','file2','file3'], fs.exists, function(results){
+							|    // results now equals an array of the existing files
+							|});
 
+				section 
+					h2 Passport
+					p Authentication framework
+					ul
+						li Works with Express
+						li Supports over 120 authentication strategies
+						ul
+							li Local
+							li OpenId
+							li Google
+							li Facebook
+							li Twitter
+							li oAuth
+
+
+				section 
+					h2 Does it play well as part of bigger applications?
+					ul 
+						li Support for most popular message queues
+						ul
+							li RabbitMQ
+							li zeroMQ
+							li etc
+						li Very good request library for HTTP
+						li Easy to execute local applications
 
 				section
 					h2 Testing testing testing
@@ -171,7 +269,21 @@ html
 						li My favorite: Jasmine
 						li Jasmine-node: command line tool for NodeJS
 						li Easy to run in Jenkins
-				
+						li Not so good for async (integration) tests
+						li Use some form of dependency injection to ease unit testing
+					pre 
+						code.javascript
+							| var controller = require('controllers/myController')
+							| var myDependency = require('myDependency')
+							| app.get('some-route', controller(myDependency))
+							|
+							| // myController
+							| module.exports = function(myDependency){
+							|    return function(req, res, next){
+							|        res.send(myDependency.doSomething());
+							|    }
+							|}
+
 				section
 					h2 debugging
 
@@ -179,7 +291,11 @@ html
 						li Use node-dev to restart your process when your code changes
 						li console.log is often a fast way to inspect objects
 						li use node-inspector to debug your application in the Chrome debugger
-
+					pre
+						code
+							| npm install -g node-inspector
+							| node --debug-brk your/node/script.js
+							| node-inspector
 
 				section
 					h2 Running in production
@@ -191,16 +307,15 @@ html
 						li App Fog
 						li Azure
 						li etc..
-					i http://strongloop.com/strongblog/a-comparison-of-node-js-paas-hosting-providers/
+					p <a href="http://strongloop.com/strongblog/a-comparison-of-node-js-paas-hosting-providers/" target="_blank">Comparison table</a> 
 				
 				section
 					h2 Performance
 					h3 It is fast. Not the fastest, but fast enough
 
-
-
-
-
+					p JSON serialization
+					a(target="_blank", href="http://www.techempower.com/benchmarks/#section=data-r6&hw=ec2&test=json", target="_blank") Benchmarks
+						img(src="/benchmark.png")
 
 
 		script( src="revealjs/lib/js/head.min.js")
